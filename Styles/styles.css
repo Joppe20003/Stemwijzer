@@ -5,3 +5,27 @@
 .table td, .table th {
     white-space: nowrap !important;
 }
+ .stelling_record div {
+     display: none; /* Hide the nested div by default */
+ }
+
+.stelling_record:hover div {
+    display: block; /* Make the nested div visible on hover */
+}
+.stelling_record:hover {
+    background-color: lightblue; /* Make the nested div visible on hover */
+    font-weight: bold;
+}
+.stelling_record {
+    padding: 5px;
+    margin-top: 5px;
+}
+.bg-light {
+    background-color: #e3f5ff !important;
+}
+.bg-primary {
+    background-color: darkblue !important;
+}
+.btn-primary {
+    background-color: darkblue !important;
+}
