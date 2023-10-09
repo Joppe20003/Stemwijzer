@@ -13,6 +13,35 @@ echo '<head>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
   <script rel="script" src="../../Javascript/index.js"></script>
 </head>';
+
+require "../../Particles/conn.php";
+$connectionClass = new Connection();
+$connection = $connectionClass->setConnection();
+
+$stelling_id = $_GET['id'];
+$sql = "SELECT * FROM `ste_stellingen` WHERE id=". $stelling_id .";";
+$result = mysqli_query($connection, $sql);
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $stelling = $row['tekst'];
+        $links_rechts = $row['links_rechts'];
+        $progressief_conservatief = $row['progressief_conservatief'];
+    }
+}
+
+if (isset($_POST['opslaan'])) {
+    $linksofrechts = $_POST['links_rechts'];
+    $progressiefofconservatief = $_POST['progressief_conservatief'];
+    echo $progressiefofconservatief;
+    $stellingNaam = $_POST['stelling'];
+    $sql = ("UPDATE `ste_stellingen` SET `links_rechts`=?, `progressief_conservatief`=?, `tekst`=? WHERE id=?");
+    echo $sql;
+    $stmnt = $connection->prepare($sql);
+    $stmnt->bind_param("iisi", $linksofrechts, $progressiefofconservatief, $stellingNaam, $stelling_id);
+    $stmnt->execute();
+
+}
+
 ?>
 <nav class="navbar navbar-dark bg-primary">
     <div class="container-fluid">
@@ -25,28 +54,29 @@ echo '<head>
         <div class="col-lg-12">
             <div class="bg-light p-2 mt-2 mb-2 rounded" style="display: flex; flex-direction: column; align-items: center;">
                 <h6 class="fs-3">Stelling 1:</h6>
-                <span class="fs-3 p">Het openbaar vervoer in nederland moet gratis worden voor mensen.</span>
+                <input name="stellingssss" value="<?php echo $stelling;?>" class="fs-3 p w-100"></input>
             </div>
         </div>
         <div class="col-lg-12">
-            <form class="mt-2 mb-2 p-2 bg-light roundend">
+            <form class="mt-2 mb-2 p-2 bg-light roundend" method="POST">
                 <div class="mb-3">
+                    <input name="stelling" value="<?php echo $stelling;?>" class="fs-3 p w-100"></input>
                     <label for="exampleInputEmail1" class="form-label">Deze stelling is:</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <select name="links_rechts" class="form-select" aria-label="Default select example">
                         <option selected>Selecteer een optie</option>
-                        <option value="1">Rechts</option>
-                        <option value="2">Links</option>
-                    </select>
+                        <option <?php if ($links_rechts == 1) { echo "selected"; } ?> value="1">Rechts</option>
+                        <option <?php if ($links_rechts == -1) { echo "selected"; } ?> value="-1">Links</option>
+                    </select> 
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">De stelling is:</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <select name="progressief_conservatief" class="form-select" aria-label="Default select example">
                         <option selected>Selecteer een optie</option>
-                        <option value="1">Progrossief</option>
-                        <option value="2">Conservatief</option>
+                        <option <?php if ($progressief_conservatief == 1) { echo "selected"; } ?> value="1">Progrossief</option>
+                        <option <?php if ($progressief_conservatief == -1) { echo "selected"; } ?> value="-1">Conservatief</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Opslaan</button>
+                <button type="submit" name="opslaan" class="btn btn-primary w-100">Opslaan</button>
             </form>
         </div>
         <div class="col-lg-6">

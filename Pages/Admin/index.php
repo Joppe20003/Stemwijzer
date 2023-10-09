@@ -12,6 +12,10 @@ echo '<head>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
   <script rel="script" src="../../Javascript/index.js"></script>
 </head>';
+
+require "../../Particles/conn.php";
+$connectionClass = new Connection();
+$connection = $connectionClass->setConnection();
 ?>
 <nav class="navbar navbar-dark bg-primary">
     <div class="container-fluid">
@@ -25,7 +29,7 @@ echo '<head>
             <div class="d-flex justify-content-between">
                 <h6>Partijen</h6>
                 <div>
-                    <label>Staat de partij er niet bij? klik</label><a href="#" style="margin-left: 4px; margin-right: 4px">hier</a><label>om er een toe te voegen</label>
+                    <label>Staat de partij er niet bij? klik</label><a href="partijToevoegen.php" style="margin-left: 4px; margin-right: 4px">hier</a><label>om er een toe te voegen</label>
                 </div>
             </div>
             <div class="row pb-2">
@@ -91,7 +95,7 @@ echo '<head>
             <div class="bg-white p-2 rounded overflow-auto shadow border border-light">
                 <div class="d-flex justify-content-between">
                     <h6>Stellingen:</h6>
-                    <a href="#" class="btn btn-primary m-1">Nieuwe medewerker aanmaken</a>
+                    <a href="stellingToevoegen.php" class="btn btn-primary m-1">Nieuwe stelling aanmaken</a>
                 </div>
                 <section>
                     <div class="table-responsive">
@@ -110,17 +114,27 @@ echo '<head>
 
                             <!--Table body-->
                             <tbody>
+                            <?php
+                            $sql = "SELECT * FROM `ste_stellingen`;";
+                            $result = mysqli_query($connection, $sql);
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
                             <tr>
                                 <th scope="row">1</th>
-                                <td>sfjfasjasfjasfjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjfasfjfsjasfjfasjsfjfasjasfjasfjjjjjjjjjjjjjjjjjjjjjjjjjjjfasfjfsjasfjfasjsfjfasjasfjasfjjjjjjjjjjjjjjjjjjfasfjfsjasfjfasj</td>
-                                <td>12</td>
+                                <td><?php echo $row['tekst'];?></td>
+                                <td></td>
                                 <td>
-                                    <form action="#" class="m-0 p-0">
-                                        <input type="submit" class="btn btn-danger" value="Verwijderen">
-                                        <input type="submit" class="btn btn-primary" value="Bewerken">
-                                    </form>
+                                    <div class="m-0 p-0">
+                                        <a class="btn btn-danger">Verwijderen</a>
+                                        <a href="stelling.php?id=<?php echo $row['id'];?>" class="btn btn-primary">Bewerken</a>
+                                </div>
                                 </td>
                             </tr>
+                            <?php
+                                }
+                            }
+                            ?>
                             </tbody>
                             <!--Table body-->
                         </table>
