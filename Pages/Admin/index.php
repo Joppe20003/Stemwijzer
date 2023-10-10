@@ -1,4 +1,12 @@
 <?php
+session_start();
+if($admin != true){
+    header("Location: ../Medewerker/index.php");
+}else if($ingelogged != true){
+    header("location : ../inlog.php");
+}
+
+
 echo '<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,6 +28,7 @@ $connection = $connectionClass->setConnection();
 <nav class="navbar navbar-dark bg-primary">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Stemwijzer</a>
+        <button class="btn btn-outline-light me-2" type="button">Inloggen</button>
         <button class="btn btn-outline-light me-2" type="button">Uitloggen</button>
     </div>
 </nav>
