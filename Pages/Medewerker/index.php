@@ -1,9 +1,4 @@
 <?php
-session_start();
-
-if($ingelogged != true OR $admin != true){
-    header("location : ../inlog.php");
-}
 echo '<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">

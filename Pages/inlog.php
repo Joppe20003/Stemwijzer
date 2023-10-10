@@ -29,7 +29,7 @@ if (isset($_POST["submit"])) {
             exit();
         }
     } else {
-        echo "Ongeldige poepje";
+        echo "Ongeldige gebruikersnaam of wachtwoord";
     }
 }
 
