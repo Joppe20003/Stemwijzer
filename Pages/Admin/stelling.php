@@ -14,6 +14,7 @@ echo '<head>
   <script rel="script" src="../../Javascript/index.js"></script>
 </head>';
 
+include "header.php";
 require "../../Particles/conn.php";
 $connectionClass = new Connection();
 $connection = $connectionClass->setConnection();
@@ -43,12 +44,6 @@ if (isset($_POST['opslaan'])) {
 }
 
 ?>
-<nav class="navbar navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="index.php">Stemwijzer</a>
-        <button class="btn btn-outline-light me-2" type="button">Uitloggen</button>
-    </div>
-</nav>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
