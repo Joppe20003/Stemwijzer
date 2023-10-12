@@ -11,7 +11,6 @@ class Connection
             exit();
         }
         else {
-            echo 'werkt';
         }
         return $con;
     }
