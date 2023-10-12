@@ -6,7 +6,7 @@ if($admin != true){
     header("location : ../inlog.php");
 }
 
-include "header.php";   
+include "../../Particles/header.php";
 
 echo '<head>
   <meta charset="utf-8">
