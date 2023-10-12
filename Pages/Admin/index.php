@@ -6,6 +6,7 @@ if($admin != true){
     header("location : ../inlog.php");
 }
 
+include "../../Particles/header.php";
 
 echo '<head>
   <meta charset="utf-8">
@@ -25,13 +26,6 @@ require "../../Particles/conn.php";
 $connectionClass = new Connection();
 $connection = $connectionClass->setConnection();
 ?>
-<nav class="navbar navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Stemwijzer</a>
-        <button class="btn btn-outline-light me-2" type="button">Inloggen</button>
-        <button class="btn btn-outline-light me-2" type="button">Uitloggen</button>
-    </div>
-</nav>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-6 pt-2 pb-2">
