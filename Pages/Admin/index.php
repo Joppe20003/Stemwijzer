@@ -1,12 +1,12 @@
 <?php
 session_start();
-//if($admin != true){
-//    header("Location: ../Medewerker/index.php");
-//}else if($ingelogged != true){
-//    header("location : ../inlog.php");
-//}
+if($admin != true){
+    header("Location: ../Medewerker/index.php");
+}else if($ingelogged != true){
+    header("location : ../inlog.php");
+}
 
-include "header.php";   
+include "../../Particles/header.php";
 
 echo '<head>
   <meta charset="utf-8">

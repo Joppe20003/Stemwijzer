@@ -1,6 +1,6 @@
 <?php
 
-include "header.php";
+include "../../Particles/header.php";
 require "../../Particles/conn.php";
 $connectionClass = new Connection();
 $connection = $connectionClass->setConnection();
