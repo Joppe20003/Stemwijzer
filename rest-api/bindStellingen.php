@@ -1,10 +1,9 @@
 <?php
-$dbhost = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "stemwijzer";
+require '../Particles/conn.php';
 
-$connection = mysqli_connect($dbhost, $user, $pass, $dbname);
+$connectionClass = new Connection();
+
+$connection = $connectionClass->setConnection();
 
 // Check connection
 if (mysqli_connect_errno()) {
