@@ -38,9 +38,7 @@ if ($selectstmt) {
             $medewerker = [
                 'id' => $row['id'],
                 'naam' => $row['naam'],
-                'achternaam' => $row['achternaam'],
-                'wachtwoord' => $row['wachtwoord'],
-                'admin' => $row['admin']
+                'achternaam' => $row['achternaam']
             ];
             $medewerkers[] = $medewerker;
         }
