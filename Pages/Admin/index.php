@@ -1,10 +1,10 @@
 <?php
 session_start();
-if($admin != true){
-    header("Location: ../Medewerker/index.php");
-}else if($ingelogged != true){
-    header("location : ../inlog.php");
-}
+// if($admin != true){
+//     header("Location: ../Medewerker/index.php");
+// }else if($ingelogged != true){
+//     header("location : ../inlog.php");
+// }
 
 include "../../Particles/header.php";
 
@@ -25,6 +25,33 @@ echo '<head>
 require "../../Particles/conn.php";
 $connectionClass = new Connection();
 $connection = $connectionClass->setConnection();
+
+
+$selectstmt = $connection->prepare("SELECT * FROM `ste_medewerkers`");
+
+if ($selectstmt) {
+    $selectstmt->execute();
+    $result = $selectstmt->get_result();
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $medewerker = [
+                'id' => $row['id'],
+                'naam' => $row['naam'],
+                'achternaam' => $row['achternaam'],
+                'wachtwoord' => $row['wachtwoord'],
+                'admin' => $row['admin']
+            ];
+            $medewerkers[] = $medewerker;
+        }
+    } else {
+        echo "Geen medewerkers gevonden";
+    }
+} else {
+    echo "Error: " . $connection->error;
+}
+
+
 ?>
 <div class="container-fluid">
     <div class="row">
@@ -75,17 +102,22 @@ $connection = $connectionClass->setConnection();
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Bert van lanen</td>
-                                    <td>bertvanlanen@gmail.com</td>
-                                    <td>
-                                        <form action="#" class="m-0 p-0">
-                                            <input type="submit" class="btn btn-danger" value="Verwijderen">
-                                            <input type="submit" class="btn btn-primary" value="Bewerken">
-                                        </form>
-                                    </td>
-                                </tr>
+                                <?php if (!empty($medewerkers)) foreach ($medewerkers as $medewerker) : ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $medewerker["id"] ?></th>
+                                        <td><?php echo $medewerker["naam"]; ?></td>
+                                        <td><?php echo $medewerker["achternaam"]; ?></td>
+                                        <td>
+                                            <form action="" class="m-0 p-0">
+                                                <input type="submit" class="btn btn-danger" value="Verwijderen">
+                                            </form>
+                                            <form action="MedewerkerBewerken.php" method="post" class="m-0 p-o">
+                                                <input type="hidden" name="medewerker_id" value="<?php echo $medewerker['id']; ?>">
+                                                <input type="submit" class="btn btn-primary" value="Bewerken">
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -106,38 +138,38 @@ $connection = $connectionClass->setConnection();
                         <table class="table table-striped table-hover">
                             <!--Table head-->
                             <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Stelling</th>
-                                <th>Partijen gekoppeld</th>
-                                <th>Acties</th>
-                            </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Stelling</th>
+                                    <th>Partijen gekoppeld</th>
+                                    <th>Acties</th>
+                                </tr>
                             </thead>
                             <!--Table head-->
 
                             <!--Table body-->
                             <tbody>
-                            <?php
-                            $sql = "SELECT * FROM `ste_stellingen`;";
-                            $result = mysqli_query($connection, $sql);
-                            if (mysqli_num_rows($result) > 0) {
-                                while ($row = mysqli_fetch_assoc($result)) {
-                            ?>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td><?php echo $row['tekst'];?></td>
-                                <td></td>
-                                <td>
-                                    <div class="m-0 p-0">
-                                        <a class="btn btn-danger">Verwijderen</a>
-                                        <a href="stelling.php?id=<?php echo $row['id'];?>" class="btn btn-primary">Bewerken</a>
-                                </div>
-                                </td>
-                            </tr>
-                            <?php
+                                <?php
+                                $sql = "SELECT * FROM `ste_stellingen`;";
+                                $result = mysqli_query($connection, $sql);
+                                if (mysqli_num_rows($result) > 0) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td><?php echo $row['tekst']; ?></td>
+                                            <td></td>
+                                            <td>
+                                                <div class="m-0 p-0">
+                                                    <a class="btn btn-danger">Verwijderen</a>
+                                                    <a href="stelling.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">Bewerken</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                <?php
+                                    }
                                 }
-                            }
-                            ?>
+                                ?>
                             </tbody>
                             <!--Table body-->
                         </table>
