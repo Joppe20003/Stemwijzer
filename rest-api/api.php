@@ -1,10 +1,9 @@
 <?php
-$dbhost = "localhost";
-$user = "klas4s21_564285";
-$pass = "u8nT7f6B";
-$dbname = "klas4s21_564285";
+require '../Particles/conn.php';
 
-$con = mysqli_connect($dbhost, $user, $pass, $dbname);
+$connectionClass = new Connection();
+
+$con = $connectionClass->setConnection();
 
 // Check connection
 if (mysqli_connect_errno()) {

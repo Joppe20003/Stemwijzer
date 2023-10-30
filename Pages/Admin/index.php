@@ -63,24 +63,21 @@ if ($selectstmt) {
                 </div>
             </div>
             <div class="row pb-2">
+                <?php
+                $sql = 'SELECT naam FROM `ste_partijen` WHERE 1';
+                $result = mysqli_query($connection, $sql);
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                    
+                ?>
+
                 <div class="col-md-3 col-lg-2 m-0 p-0">
-                    <div class="rounded shadow p-2 hover-background-gray" style="position: relative; margin: 5px">VVD<i class="fa fa-pencil" style="font-size: 20px; right: 27.5px; color: black; position: absolute" aria-hidden="true"></i><i href="#" class="fa fa-trash" style="font-size: 20px; right: 7.5px; color: black; position: absolute" aria-hidden="true"></i></div>
+                    <div class="rounded shadow p-2 hover-background-gray" style="position: relative; margin: 5px"><?php echo $row['naam'];?><i class="fa fa-pencil" style="font-size: 20px; right: 27.5px; color: black; position: absolute" aria-hidden="true"></i><i href="#" class="fa fa-trash" style="font-size: 20px; right: 7.5px; color: black; position: absolute" aria-hidden="true"></i></div>
                 </div>
-                <div class="col-md-3 col-lg-2 m-0 p-0">
-                    <div class="rounded shadow p-2 hover-background-gray" style="position: relative; margin: 5px">D66<i class="fa fa-pencil" style="font-size: 20px; right: 27.5px; color: black; position: absolute" aria-hidden="true"></i><i href="#" class="fa fa-trash" style="font-size: 20px; right: 7.5px; color: black; position: absolute" aria-hidden="true"></i></div>
-                </div>
-                <div class="col-md-3 col-lg-2 m-0 p-0">
-                    <div class="rounded shadow p-2 hover-background-gray" style="position: relative; margin: 5px">Pvda<i class="fa fa-pencil" style="font-size: 20px; right: 27.5px; color: black; position: absolute" aria-hidden="true"></i><i href="#" class="fa fa-trash" style="font-size: 20px; right: 7.5px; color: black; position: absolute" aria-hidden="true"></i></div>
-                </div>
-                <div class="col-md-3 col-lg-2 m-0 p-0">
-                    <div class="rounded shadow p-2 hover-background-gray" style="position: relative; margin: 5px">PVV<i class="fa fa-pencil" style="font-size: 20px; right: 27.5px; color: black; position: absolute" aria-hidden="true"></i><i href="#" class="fa fa-trash" style="font-size: 20px; right: 7.5px; color: black; position: absolute" aria-hidden="true"></i></div>
-                </div>
-                <div class="col-md-3 col-lg-2 m-0 p-0">
-                    <div class="rounded shadow p-2 hover-background-gray" style="position: relative; margin: 5px">CDA<i class="fa fa-pencil" style="font-size: 20px; right: 27.5px; color: black; position: absolute" aria-hidden="true"></i><i href="#" class="fa fa-trash" style="font-size: 20px; right: 7.5px; color: black; position: absolute" aria-hidden="true"></i></div>
-                </div>
-                <div class="col-md-3 col-lg-2 m-0 p-0">
-                    <div class="rounded shadow p-2 hover-background-gray" style="position: relative; margin: 5px">BBB<i class="fa fa-pencil" style="font-size: 20px; right: 27.5px; color: black; position: absolute" aria-hidden="true"></i><i href="#" class="fa fa-trash" style="font-size: 20px; right: 7.5px; color: black; position: absolute" aria-hidden="true"></i></div>
-                </div>
+                <?php
+                    }
+                }
+                ?>
             </div>
         </div>
         <div class="col-lg-6 pt-2 pb-2">

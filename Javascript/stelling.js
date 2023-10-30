@@ -64,7 +64,7 @@ function addPartyEens(name,partyId, stellingId, actie) {
         actie: actie
     };
 
-    fetch('http://localhost/stemwijzer/rest-api/bindStellingen.php', {
+    fetch('../../rest-api/bindStellingen.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -98,7 +98,7 @@ function addPartyGeenMening(name, partyId, stellingId, actie) {
         actie: actie
     };
 
-    fetch('http://localhost/stemwijzer/rest-api/bindStellingenGeenMening.php', {
+    fetch('../../rest-api/BindStellingenGeenMening.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -133,7 +133,7 @@ function addPartyOneens(name, partyId, stellingId, actie) {
 
     };
 
-    fetch('http://localhost/stemwijzer/rest-api/bindStellingenOneens.php', {
+    fetch('../../rest-api/BindStellingenOneens.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

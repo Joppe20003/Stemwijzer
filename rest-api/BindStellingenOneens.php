@@ -1,10 +1,9 @@
 <?php
-$dbhost = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "stemwijzer";
+require '../Particles/conn.php';
 
-$connection = mysqli_connect($dbhost, $user, $pass, $dbname);
+$connectionClass = new Connection();
+
+$connection = $connectionClass->setConnection();
 
 // Check connection
 if (mysqli_connect_errno()) {
@@ -21,7 +20,7 @@ $stellingId = $data['stellingId'];
 $actie = $data['actie'];
 
 if ($actie == "toevoegen") {
-    $sql = "INSERT INTO `ste_stellingen_partijen`(`ste_partij_id`, `ste_stellingen_id`, `eens`) VALUES (?,?,-1)";
+    $sql = "INSERT INTO `ste_stellingen_partijen`(`ste_partij_id`, `ste_stellingen_id`, `eens`) VALUES (?,?,'-1')";
     $stmt = $connection->prepare($sql);
     $stmt->bind_param("ii", $partyId, $stellingId);
     $result = $stmt->execute();

@@ -47,6 +47,8 @@ if (isset($_POST['opslaan'])) {
     $stmnt->bind_param("iisi", $linksofrechts, $progressiefofconservatief, $stellingNaam, $stelling_id);
     $stmnt->execute();
 
+    header('Location: index.php');
+
 }
 
 ?>
@@ -62,9 +64,18 @@ if (isset($_POST['opslaan'])) {
                 <label>Kies een partij:</label>
                 <form>
                     <select class="form-select mt-1" id="selectedPartyForm">
-                        <option value="VVD" data-party="1">VVD</option>
-                        <option value="CDA" data-party="2">CDA</option>
-                        <option value="BBB" data-party="3">BBB</option>
+                        <?php
+                        $connectionClass = new Connection();
+                        $connection = $connectionClass->setConnection();
+
+                        $sql = "SELECT * FROM `ste_partijen`;";
+                        $result = mysqli_query($connection, $sql);
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo '<option value="' . $row['naam'] . '" data-party="' . $row['id'] . '">' . $row['naam'] . '</option>';
+                            }
+                        }
+                        ?>
                     </select>
                 </form>
             </div>
@@ -86,13 +97,13 @@ if (isset($_POST['opslaan'])) {
         <div class="col-lg-12">
             <form class="mt-2 mb-2 p-2 bg-light roundend" method="POST">
                 <div class="mb-3">
-                    <input name="stelling" value="<?php echo $stelling;?>" class=" fs-3 p w-100"></input>
+                    <input type="text" name="stelling" value="<?php echo $stelling;?>" class=" fs-3 p w-100"></input>
                     <label for="exampleInputEmail1" class="form-label">Deze stelling is:</label>
                     <select name="links_rechts" class="form-select" aria-label="Default select example">
                         <option selected>Selecteer een optie</option>
                         <option <?php if ($links_rechts == 1) { echo "selected"; } ?> value="1">Rechts</option>
                         <option <?php if ($links_rechts == -1) { echo "selected"; } ?> value="-1">Links</option>
-                    </select> 
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">De stelling is:</label>
