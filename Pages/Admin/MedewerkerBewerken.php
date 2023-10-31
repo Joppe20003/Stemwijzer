@@ -43,7 +43,8 @@ if (isset($_POST["submit"])) {
 
     if ($updatestmt->execute()) {
         echo "Update succesvol" . "<br>";
-        echo $hashed_password . "<br>";
+        header("Location: index.php");
+        exit();
     } else {
         echo "Update mislukt";
     }
