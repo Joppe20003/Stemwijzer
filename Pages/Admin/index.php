@@ -75,12 +75,12 @@ if ($result->num_rows > 0) {
                 $result = mysqli_query($connection, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
-                    
+
                 ?>
 
-                <div class="col-md-3 col-lg-2 m-0 p-0">
-                    <div class="rounded shadow p-2 hover-background-gray" style="position: relative; margin: 5px"><?php echo $row['naam'];?><i class="fa fa-pencil" style="font-size: 20px; right: 27.5px; color: black; position: absolute" aria-hidden="true"></i><i href="#" class="fa fa-trash" style="font-size: 20px; right: 7.5px; color: black; position: absolute" aria-hidden="true"></i></div>
-                </div>
+                        <div class="col-md-3 col-lg-2 m-0 p-0">
+                            <div class="rounded shadow p-2 hover-background-gray" style="position: relative; margin: 5px"><?php echo $row['naam']; ?><i class="fa fa-pencil" style="font-size: 20px; right: 27.5px; color: black; position: absolute" aria-hidden="true"></i><i href="#" class="fa fa-trash" style="font-size: 20px; right: 7.5px; color: black; position: absolute" aria-hidden="true"></i></div>
+                        </div>
                 <?php
                     }
                 }
@@ -113,6 +113,7 @@ if ($result->num_rows > 0) {
                                         <td><?php echo $medewerker["achternaam"]; ?></td>
                                         <td class="d-flex">
                                             <form action="" class="m-0 p-0">
+                                                <input type="hidden" name="medewerker_id" value="<?php echo $medewerker['id']; ?>">
                                                 <input type="submit" class="btn btn-danger" value="Verwijderen">
                                             </form>
                                             <form action="MedewerkerBewerken.php" method="post" class="m-0 p-o">
