@@ -1,5 +1,5 @@
 let action;
-let result;
+let result = false;
 
 let selectedParty = [];
 
@@ -27,6 +27,8 @@ function setAction(selectedActionOption) {
     action = selectedActionOption;
 }
 function checkDuplicates(partyName, partId, stellingId, actie) {
+    //console.log('test');
+
     let name = "-" + document.getElementById('selectedPartyForm').value;
 
     for (let i = 0; i < selectedParty.length; i++) {
@@ -34,12 +36,16 @@ function checkDuplicates(partyName, partId, stellingId, actie) {
             // Set the error message
             document.getElementById('formSelectError').style.display = 'flex';
 
+            console.log('test');
+
             // Set result to true
             result = true;
 
             break;
         } else {
             document.getElementById('formSelectError').style.display = 'none';
+
+            console.log('test');
 
             result = false;
         }

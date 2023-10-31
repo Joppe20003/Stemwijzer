@@ -49,6 +49,15 @@ if ($selectstmt) {
     echo "Error: " . $connection->error;
 }
 
+$stmt2 = $connection->prepare("SELECT COUNT(*) AS 'count' FROM `ste_partijen`");
+$stmt2->execute();
+$result = $stmt2->get_result();
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $partyTotalCount = $row['count'];
+    }
+}
 
 ?>
 <div class="container-fluid">
@@ -82,7 +91,7 @@ if ($selectstmt) {
             <div class="bg-white p-2 rounded overflow-auto shadow border border-light">
                 <div class="d-flex justify-content-between">
                     <h6>Medewerkers</h6>
-                    <a href="#" class="btn btn-primary m-1">Nieuwe medewerker aanmaken</a>
+                    <a href="MedewerkerToevoegen.php" class="btn btn-primary m-1">Nieuwe medewerker aanmaken</a>
                 </div>
                 <section>
                     <div class="table-responsive">
@@ -102,13 +111,13 @@ if ($selectstmt) {
                                         <th scope="row"><?php echo $medewerker["id"] ?></th>
                                         <td><?php echo $medewerker["naam"]; ?></td>
                                         <td><?php echo $medewerker["achternaam"]; ?></td>
-                                        <td>
+                                        <td class="d-flex">
                                             <form action="" class="m-0 p-0">
                                                 <input type="submit" class="btn btn-danger" value="Verwijderen">
                                             </form>
                                             <form action="MedewerkerBewerken.php" method="post" class="m-0 p-o">
                                                 <input type="hidden" name="medewerker_id" value="<?php echo $medewerker['id']; ?>">
-                                                <input type="submit" class="btn btn-primary" value="Bewerken">
+                                                <input type="submit" class="btn btn-primary" value="Bewerken" style="margin-left: 5px !important;">
                                             </form>
                                         </td>
                                     </tr>
@@ -145,18 +154,20 @@ if ($selectstmt) {
                             <!--Table body-->
                             <tbody>
                                 <?php
-                                $sql = "SELECT * FROM `ste_stellingen`;";
+                                $i = 0;
+                                $sql = "SELECT *, (SELECT COUNT(*) AS 'count' FROM `ste_stellingen_partijen` WHERE `ste_stellingen_partijen`.`ste_stellingen_id` = ste_stellingen.id) AS 'count' FROM `ste_stellingen`;";
                                 $result = mysqli_query($connection, $sql);
                                 if (mysqli_num_rows($result) > 0) {
                                     while ($row = mysqli_fetch_assoc($result)) {
+                                        $i++
                                 ?>
                                         <tr>
-                                            <th scope="row">1</th>
+                                            <th scope="row"><?php echo $i ?></th>
                                             <td><?php echo $row['tekst']; ?></td>
-                                            <td></td>
+                                            <td><?php echo $row['count'] . '/' . $partyTotalCount ?></td>
                                             <td>
                                                 <div class="m-0 p-0">
-                                                    <a class="btn btn-danger">Verwijderen</a>
+                                                    <a href="stellingDelete.php?id=<?php echo $row['id'] ?>" class="btn btn-danger">Verwijderen</a>
                                                     <a href="stelling.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">Bewerken</a>
                                                 </div>
                                             </td>

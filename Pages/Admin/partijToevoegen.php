@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 <div class="container mt-5">
     <div class="row justify-content-center align-items-center" style="height: 70vh;">
         <div class="col-md-6">
-            <form method="POST">
+            <form method="POST" action="partijToevoegen.php">
                 <div class="form-group">
                     <label for="partij">Vul hier uw partij in:</label>
                     <input type="text" class="form-control" id="partij" name="partij">

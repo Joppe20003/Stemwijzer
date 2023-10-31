@@ -24,31 +24,29 @@ include "header.php";
 require "../../Particles/conn.php";
 $connectionClass = new Connection();
 $connection = $connectionClass->setConnection();
-
-$stelling_id = $_GET['id'];
-$sql = "SELECT * FROM `ste_stellingen` WHERE id=". $stelling_id .";";
-$result = mysqli_query($connection, $sql);
-if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $stelling = $row['tekst'];
-        $links_rechts = $row['links_rechts'];
-        $progressief_conservatief = $row['progressief_conservatief'];
+if (isset($_GET['id'])) {
+    $stelling_id = $_GET['id'];
+    $sql = "SELECT * FROM `ste_stellingen` WHERE id=". $stelling_id .";";
+    $result = mysqli_query($connection, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $stelling = $row['tekst'];
+        }
     }
 }
 
 if (isset($_POST['opslaan'])) {
-    $linksofrechts = $_POST['links_rechts'];
-    $progressiefofconservatief = $_POST['progressief_conservatief'];
-    echo $progressiefofconservatief;
+    $stelling_idTemp = 1;
     $stellingNaam = $_POST['stelling'];
-    $sql = ("UPDATE `ste_stellingen` SET `links_rechts`=?, `progressief_conservatief`=?, `tekst`=? WHERE id=?");
-    echo $sql;
-    $stmnt = $connection->prepare($sql);
-    $stmnt->bind_param("iisi", $linksofrechts, $progressiefofconservatief, $stellingNaam, $stelling_id);
-    $stmnt->execute();
+    $linksofrechts = 1; // Define this variable with the appropriate value
+    $progressiefofconservatief = 1; // Define this variable with the appropriate value
+
+    $sql = "UPDATE `ste_stellingen` SET `links_rechts`=?, `progressief_conservatief`=?, `tekst`=? WHERE id=?";
+    $stmnt2 = $connection->prepare($sql);
+    $stmnt2->bind_param("iisi", $linksofrechts, $progressiefofconservatief, $stellingNaam, $stelling_idTemp);
+    $stmnt2->execute();
 
     header('Location: index.php');
-
 }
 
 ?>
@@ -89,31 +87,11 @@ if (isset($_POST['opslaan'])) {
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <div class="bg-light p-2 mt-2 mb-2 rounded" style="display: flex; flex-direction: column; align-items: center;">
-                <h6 class="fs-3">Stelling 1:</h6>
-                <input name="stellingssss" value="<?php echo $stelling;?>" class="fs-3 p w-100"></input>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <form class="mt-2 mb-2 p-2 bg-light roundend" method="POST">
+            <form class="mt-2 mb-2 p-2 bg-light roundend" method="POST" action="stelling.php">
                 <div class="mb-3">
-                    <input type="text" name="stelling" value="<?php echo $stelling;?>" class=" fs-3 p w-100"></input>
-                    <label for="exampleInputEmail1" class="form-label">Deze stelling is:</label>
-                    <select name="links_rechts" class="form-select" aria-label="Default select example">
-                        <option selected>Selecteer een optie</option>
-                        <option <?php if ($links_rechts == 1) { echo "selected"; } ?> value="1">Rechts</option>
-                        <option <?php if ($links_rechts == -1) { echo "selected"; } ?> value="-1">Links</option>
-                    </select>
+                    <input type="text" name="stelling" value="<?php echo $stelling;?>" class="fs-3 p w-100 mb-3">
+                    <input type="submit" name="opslaan" class="btn btn-primary w-100" value="Opslaan"/>
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">De stelling is:</label>
-                    <select name="progressief_conservatief" class="form-select" aria-label="Default select example">
-                        <option selected>Selecteer een optie</option>
-                        <option <?php if ($progressief_conservatief == 1) { echo "selected"; } ?> value="1">Progrossief</option>
-                        <option <?php if ($progressief_conservatief == -1) { echo "selected"; } ?> value="-1">Conservatief</option>
-                    </select>
-                </div>
-                <button type="submit" name="opslaan" class="btn btn-primary w-100">Opslaan</button>
             </form>
         </div>
         <div class="col-lg-12">
